@@ -24,7 +24,7 @@ int main()
 
 	Text text;
 	text.setFont(font);
-	text.setString("Welcome to Chaos Game! Click any 3 points to start!");
+	text.setString("Welcome to Chaos Game!");
 	text.setCharacterSize(20);
 	text.setFillColor(Color::Magenta);
 	text.setPosition(10.f, 20.f);
@@ -61,8 +61,7 @@ int main()
 			    }
 			    else if(points.size() == 0)
 			    {
-				///fourth click
-				///push back to points vector
+					points.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y)); //fourth click - push back to points vector
 			    }
 			}
 		    }
@@ -79,6 +78,17 @@ int main()
 	
 		if(points.size() > 0)
 		{
+			for (int i = 0; i < 1000; i++)
+			{
+				int randdomVertextIndex = rand() % 3;
+				Vector2f targetVertex = vertices[randdomVertextIndex];
+				Vector2f lastPoint = points.back();
+
+				Vector2f newPoint;
+				newPoint.x = (lastPoint.x + targetVertex.x) / 2.0;
+				newPoint.y = (lastPoint.y + targetVertex.y) / 2.0;
+				points.push_back(newPoint);
+ 			}
 		    ///generate more point(s)
 		    ///select random vertex
 		    ///calculate midpoint between random vertex and the last point in the vector
@@ -100,6 +110,12 @@ int main()
 		    window.draw(rect);
 		}
 		///TODO:  Draw points
+		for (int i = 0; i < points.size(); i++) {
+			RectangleShape dot(Vector2f(2, 2)); // Small 2x2 pixel dot
+			dot.setPosition(points[i]);
+			dot.setFillColor(Color::Green);
+			window.draw(dot);
+		}
 		window.display();
 	}
 }
