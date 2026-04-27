@@ -6,7 +6,7 @@
 #include <vector>
 
 //Make the code easier to type with "using namespace"
-using namespace sf;
+using namespace sf; 
 using namespace std;
 
 int main()
@@ -16,6 +16,19 @@ int main()
 	// Create and open a window for the game
 	RenderWindow window(vm, "Chaos Game!!", Style::Default);
 	
+	Font font;
+	if (!font.loadFromFile("SuperMario256.ttf")) {
+		cerr << "Error: Could not load font file" << endl;
+		return -1;
+	}
+
+	Text text;
+	text.setFont(font);
+	text.setString("Welcome to Chaos Game! Click any 3 points to start!");
+	text.setCharacterSize(20);
+	text.setFillColor(Color::Magenta);
+	text.setPosition(10.f, 20.f);
+
 	vector<Vector2f> vertices;
 	vector<Vector2f> points;
 
@@ -78,6 +91,7 @@ int main()
 		****************************************
 		*/
 		window.clear();
+		window.draw(text);
 		for(int i = 0; i < vertices.size(); i++)
 		{
 		    RectangleShape rect(Vector2f(10,10));
